@@ -1,0 +1,28 @@
+{
+  "name": "todobackend-specs",
+  "version": "0.1.0",
+  "description": "Todobackend Acceptance Tests",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoharngo/todobackend-specs.git"
+  },
+  "author": "Zohar Nyego",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoharngo/todobackend-specs/issues"
+  },
+  "homepage": "https://github.com/zoharngo/todobackend-specs#readme",
+  "dependencies": {
+    "bluebird": "^3.5.2",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0",
+    "mocha-jenkins-reporter": "^0.4.0",
+    "superagent": "^3.8.3",
+    "superagent-promise": "^1.1.0"
+  }
+}
