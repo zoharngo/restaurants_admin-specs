@@ -1,3 +1,6 @@
+// YOU SHOULD START GRUNT BEFORE RUNNING THE 
+// ACCEPTANCE TEST
+
 const chai = require('chai'),
     should = chai.should,
     expect = chai.expect,
