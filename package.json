@@ -1,21 +1,21 @@
 {
-  "name": "todobackend-specs",
+  "name": "restaurants-admin-specs",
   "version": "0.1.0",
-  "description": "Todobackend Acceptance Tests",
+  "description": "Restaurants administrator API Acceptance Tests",
   "main": "app.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoharngo/todobackend-specs.git"
+    "url": "git+https://github.com/zoharngo/restaurants-admin-specs.git"
   },
   "author": "Zohar Nyego",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zoharngo/todobackend-specs/issues"
+    "url": "https://github.com/zoharngo/restaurants-admin-specs/issues"
   },
-  "homepage": "https://github.com/zoharngo/todobackend-specs#readme",
+  "homepage": "https://github.com/zoharngo/restaurants-admin-specs#readme",
   "dependencies": {
     "bluebird": "^3.5.2",
     "chai": "^4.1.2",

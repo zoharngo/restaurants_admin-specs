@@ -86,7 +86,6 @@ describe('Update Restaurant', () => {
 });
 describe('Delete Restaurant', () => {
     let location;
-
     beforeEach((done) => {
         post(url, [{ title: 'BBB' }])
             .then((res) => {
