@@ -33,12 +33,22 @@ describe('Cross Origin Requests', () => {
     });
 });
 
+const mock = [{
+    'restaurant_name': 'Hudson',
+    'restaurant_type': 'Grill',
+    'phone': '+(972) 3644 4733',
+    'location': {
+        'coordinates': '32.109805/34.840232',
+        'address': ''
+    }
+}];
+
 describe('Create Restaurant', () => {
     let result;
     let item;
 
     before(() => {
-        result = post(url, [{'restaurant_name' : 'Hudson'}]);
+        result = post(url, mock);
     });
 
     it('should return a 201 CREATED response', () => {
@@ -46,7 +56,8 @@ describe('Create Restaurant', () => {
     });
 
     it("should have restaurant_name property equal to 'Hudson'", () => {
-        item = result.then((res) => {;
+        item = result.then((res) => {
+            ;
             return get(url.concat('/').concat(res['body'][0].uuid));
         });
         return assert(item, 'body').to.contain.property('restaurant_name').equal('Hudson');
@@ -60,7 +71,7 @@ describe('Update Restaurant', () => {
     let location;
 
     beforeEach((done) => {
-        post(url, [{ title: 'Hudson' }]).then((res) => {
+        post(url, mock).then((res) => {
             location = url.concat('/').concat(res['body'][0].uuid);
             done();
         });
@@ -69,8 +80,8 @@ describe('Update Restaurant', () => {
 
     it('should have restaurant_type set to grill after PUT update', () => {
         let result = update(location, 'PUT',
-            { 'restaurant_type': 'grill' });
-        return assert(result, 'body').to.contain.property('restaurant_type').equal('grill');
+            { 'restaurant_type': 'Burger' });
+        return assert(result, 'body').to.contain.property('restaurant_type').equal('Burger');
     });
 
 
@@ -87,7 +98,7 @@ describe('Update Restaurant', () => {
 describe('Delete Restaurant', () => {
     let location;
     beforeEach((done) => {
-        post(url, [{ title: 'BBB' }])
+        post(url, mock)
             .then((res) => {
                 location = url.concat('/').concat(res['body'][0].uuid);
                 done();
