@@ -33,15 +33,17 @@ describe('Cross Origin Requests', () => {
     });
 });
 
-const mock = [{
-    'restaurant_name': 'Hudson',
-    'restaurant_type': 'Grill',
-    'phone': '+(972) 3644 4733',
-    'location': {
-        'coordinates': '32.109805/34.840232',
-        'address': ''
+const mock = [
+    {
+        "location": {
+            "coordinates": "32.109805/34.840232",
+            "address": "HaBarzel St 27, Tel Aviv-Yafo, Israel"
+        },
+        "restaurant_name": "Hudson",
+        "restaurant_type": "Grill",
+        "phone": "+(972) 3644 4733"
     }
-}];
+];
 
 describe('Create Restaurant', () => {
     let result;
@@ -56,39 +58,45 @@ describe('Create Restaurant', () => {
     });
 
     it("should have restaurant_name property equal to 'Hudson'", () => {
-        item = result.then((res) => {
-            ;
-            return get(url.concat('/').concat(res['body'][0].uuid));
+        return result.then(() => {
+            return get(url);
+        }).then((res) => {
+            return expect(res['body'][0]).to.contain.property('restaurant_name').equal('Hudson');
         });
-        return assert(item, 'body').to.contain.property('restaurant_name').equal('Hudson');
     });
 
     after(() => {
         return del(url);
     });
 });
+
+
 describe('Update Restaurant', () => {
     let location;
 
-    beforeEach((done) => {
-        post(url, mock).then((res) => {
-            location = url.concat('/').concat(res['body'][0].uuid);
-            done();
-        });
+    before((done) => {
+        del(url).then(() => {
+            post(url, mock).then(() => {
+                return get(url);
+            }).then((res) => {
+                location = url.concat('/').concat(res['body'][0].uuid);
+                done();
+            });
+        })
     });
 
-
-    it('should have restaurant_type set to grill after PUT update', () => {
-        let result = update(location, 'PUT',
-            { 'restaurant_type': 'Burger' });
-        return assert(result, 'body').to.contain.property('restaurant_type').equal('Burger');
+    it('should have restaurant_type set to Burger after PUT update', () => {
+        return update(location, 'PUT',
+            { 'restaurant_type': 'Burger' }).then((res) => {
+                return expect(res['body']).to.contain.property('restaurant_type').equal('Burger');
+            })
     });
-
 
     it('should have phone set to (+972) 050 - 4945555 PATCH update', () => {
-        let result = update(location, 'PATCH',
-            { 'phone': '(+972) 050 - 4945555' });
-        return assert(result, 'body').to.contain.property('phone').equal('(+972) 050 - 4945555');
+        return update(location, 'PATCH',
+            { 'phone': '(+972) 050 - 4945555' }).then((res) => {
+                return expect(res['body']).to.contain.property('phone').equal('(+972) 050 - 4945555');
+            });
     });
 
     after(() => {
@@ -99,26 +107,24 @@ describe('Delete Restaurant', () => {
     let location;
     beforeEach((done) => {
         post(url, mock)
-            .then((res) => {
+            .then(() => get(url)).then((res) => {
                 location = url.concat('/').concat(res['body'][0].uuid);
                 done();
-            });
+            })
     });
 
     it('should return 204 NO CONTENT response', () => {
-        let result = del(location);
-        return assert(result, 'status').to.equal(204);
+        return del(location).then((res) => {
+            return expect(res['status']).to.equal(204);
+        });
     });
 
-    it('should delete the restaurant', () => {
-        let result = del(location).then((res) => {
-            return get(location);
+    it('should return empty restaurants list', () => {
+        return del(url).then(() =>get(url)).then((res) => {
+            return expect(res['body'].length).to.be.equal(0);
         });
-
-        return expect(result).to.eventually.be.rejectedWith('Not Found');
     });
 });
-
 /**
  * Convenience functions 
  **/
