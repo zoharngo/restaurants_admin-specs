@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:kinetic-20220830
 MAINTAINER Zohar Nyego <zoharngo@gmail.com>
 
 # Prevent dpkg errors
